@@ -1,0 +1,41 @@
+<!doctype html>
+<html ng-app="xapp">
+
+<head>
+    <title>Angular Training - ngRepeat</title>
+    <script type="text/javascript" src="../js/angular.js"></script>
+    <script type="text/javascript" src="app.js"></script>
+</head>
+
+<body ng-controller="xctrl">
+    <h2>Table Siswa</h2>
+    <!-- <p>
+        <label>Saringan</label>
+        <select>
+            <option ng-repeat="c in categories">{{c}}</option>
+        </select>
+    </p> -->
+    <p>
+        <label>Kata Kunci</label>
+        <input type="search" ng-model="q" placeholder="cari siswa" />
+    </p>
+    <p>
+    	<table border="1">
+    		<tr>
+    			<th><a href="" ng-click="ord='name'">Nama</a></th>
+    			<th><a href="" ng-click="ord='class'">Kelas</a></th>
+    			<th><a href="" ng-click="ord='score'">Nilai</a></th>
+    		</tr>
+    		<tr ng-repeat="s in (results = (students | filter:q | orderBy:ord:true))">
+    			<td>{{s.name}}</td>
+    			<td>{{s.class}}</td>
+    			<td>{{s.score}}</td>
+    		</tr>
+    		<tr ng-if="results.length == 0">
+    			<td colspan="3">Hasil tidak ditemukan</td>
+    		</tr>
+    	</table>
+    </p>
+</body>
+
+</html>
