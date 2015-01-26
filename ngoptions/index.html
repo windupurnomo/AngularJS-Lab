@@ -1,0 +1,28 @@
+<!doctype html>
+<html ng-app="">
+
+<head>
+    <title>Demo ngOptions</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.28/angular.min.js"></script>
+    <script src="app.js"></script>
+</head>
+
+<body ng-controller="xctrl">
+    <h1>Demo ngOptions</h1>
+    <p>
+        <label>Daftar Kota:</label>
+        <select 
+        	ng-change="selectAction()"
+        	ng-model="selectedCity" 
+        	ng-options="city as city.kota group by city.provinsi for city in cities">
+            <option>--</option>
+        </select>
+    </p>
+    <hr>
+    <p>
+    	<label>Preview Kota Pilihan dalam format JSON</label>
+    	<pre>{{selectedCity}}</pre>
+    </p>
+</body>
+
+</html>

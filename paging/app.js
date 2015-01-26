@@ -1,40 +1,40 @@
-var app = angular.module('xapp', []);
+var app = angular.module('myApp', []);
 
-app.controller('xctrl', function ($scope){
+app.controller('myCtrl', function ($scope){
 	$scope.students = students;
-	$scope.orderstat = true;
 	$scope.pagesizes = [5, 10, 15, 20];
-	$scope.pagesize = $scope.pagesizes[0];
-	$scope.currentpage = 0;
-	$scope.pagenumber = Math.ceil($scope.students.length / $scope.pagesize);
+	$scope.pagesize = $scope.pagesizes[0];//jumlah baris dalam 1 halaman
+	$scope.currentpage = 0;//lokasi halaman saat ini
+	$scope.pagenumber = Math.ceil($scope.students.length / $scope.pagesize);//jumlah total halaman
 
-	
 	$scope.paging = function (type){
 		if (type == 0 && $scope.currentpage > 0){
 			--$scope.currentpage;
-		}else if (type == 1 && $scope.currentpage < $scope.pagenumber-1 ){
+		}else if (type == 1 && $scope.currentpage < $scope.pagenumber-1){
 			++$scope.currentpage;
 		}
 	}
+
+	$scope.$watchCollection('results', function (){
+		if ($scope.results == undefined) return;
+		$scope.currentpage = 0;
+		$scope.pagenumber = Math.ceil($scope.results.length / $scope.pagesize);		
+	});
 
 	$scope.changeAction = function (){
 		$scope.currentpage = 0;
 		$scope.pagenumber = Math.ceil($scope.results.length / $scope.pagesize);
 	}
 
-	$scope.$watchCollection('results', function (){
-		if ($scope.results == undefined) return;
-		$scope.currentpage = 0;
-		$scope.pagenumber = Math.ceil($scope.results.length / $scope.pagesize);
-	});
-
 	$scope.ordering = function (ordvar, by){
 		ordvar = !ordvar;
-		$scope.orderstat = ordvar;
+		$scope.ordstatus = ordvar;
 		$scope.ord = by;
 		return ordvar;
 	}
+
 });
+
 
 var students = [{
 		name: 'Jajang',

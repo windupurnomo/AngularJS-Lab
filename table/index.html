@@ -9,32 +9,37 @@
 
 <body ng-controller="xctrl">
     <h2>Table Siswa</h2>
-    <!-- <p>
-        <label>Saringan</label>
-        <select>
-            <option ng-repeat="c in categories">{{c}}</option>
-        </select>
-    </p> -->
     <p>
         <label>Kata Kunci</label>
         <input type="search" ng-model="q" placeholder="cari siswa" />
     </p>
     <p>
-    	<table border="1">
-    		<tr>
-    			<th><a href="" ng-click="ord='name'">Nama</a></th>
-    			<th><a href="" ng-click="ord='class'">Kelas</a></th>
-    			<th><a href="" ng-click="ord='score'">Nilai</a></th>
-    		</tr>
-    		<tr ng-repeat="s in (results = (students | filter:q | orderBy:ord:true))">
-    			<td>{{s.name}}</td>
-    			<td>{{s.class}}</td>
-    			<td>{{s.score}}</td>
-    		</tr>
-    		<tr ng-if="results.length == 0">
-    			<td colspan="3">Hasil tidak ditemukan</td>
-    		</tr>
-    	</table>
+        <select ng-model="pagesize" ng-options="opt as opt for opt in pagesizes"
+            ng-change="changeAction()">
+        </select>
+        <span>halaman {{currentpage + 1}} dari {{pagenumber}}</span>
+        <table border="1">
+            <tr>
+                <th><a href="" ng-click="namebool = ordering(namebool, 'name');">Nama</a></th>
+                <th><a href="" ng-click="classbool = ordering(classbool, 'class');">Kelas</a></th>
+                <th><a href="" ng-click="scorebool = ordering(scorebool, 'score');">Nilai</a></th>
+            </tr>
+            <tr ng-repeat="s in (results = (students | filter:q | orderBy:ord:orderstat))"
+                ng-if="$index >= (currentpage*pagesize) && $index < ((currentpage+1)*pagesize)">
+                <td>{{s.name}}</td>
+                <td>{{s.class}}</td>
+                <td>{{s.score}}</td>
+            </tr>
+            <tr ng-if="results.length == 0">
+                <td colspan="3">Hasil tidak ditemukan</td>
+            </tr>
+        </table>
+    </p>
+    <p>
+        <button ng-click="currentpage=0">Pertama</button>
+        <button ng-click="paging(0)">Sebelumnya</button>
+        <button ng-click="paging(1)">Selanjutnya</button>
+        <button ng-click="currentpage=pagenumber-1">Terakhir</button>
     </p>
 </body>
 
